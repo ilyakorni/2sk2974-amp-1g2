@@ -2,11 +2,11 @@
   <a href="README.md">Русский</a> | <a href="README.en.md">English</a> | <b>Deutsch</b>
 </p>
 
-# 2sk2974-1g2-match: Komplexe Impedanzanpassung des UHF-MOSFET-Viertors 2SK2974 bei 1,2 GHz
+# 2sk2974-1g2-match: Impedanzanpassung des UHF-MOSFET-Viertors 2SK2974 bei 1,2 GHz
 
-Dieses Repository umfasst den Entwurf, die analytische Synthese und die numerische Schaltungssimulation eines reaktiven L-Glied-Anpassungsnetzwerks mit konzentrierten Elementen für den UHF-Leistungs-MOSFET **2SK2974** bei einer Betriebsfrequenz von **1,2 GHz (1200 MHz)**. Das Netzwerk transformiert die niederohmigen komplexen Gate- und Drain-Impedanzen an standardisierte $50\ \Omega$-Referenztore.
+Dieses Repository enthält das Simulationsprojekt eines reaktiven Anpassungsnetzwerks mit konzentrierten Elementen für den UHF-Leistungs-MOSFET **2SK2974** bei einer Betriebsfrequenz von **1,2 GHz (1200 MHz)**. Das Netzwerk passt das Zweitor an $50\ \Omega$-Referenztore an.
 
-Das Projekt beinhaltet analytische Berechnungen über Kettenmatrizen (ABCD), eine Schaltungssimulation in **Cadence AWR Microwave Office (MWO)**, Smith-Diagramme sowie Frequenzgänge des Reflexionsfaktors ($S_{11}$) und des Stehwellenverhältnisses (VSWR).
+Die Schaltungssimulation wurde in **Cadence AWR Microwave Office (MWO)** durchgeführt. Das Repository enthält den Schaltplan, Smith-Diagramme sowie Frequenzgänge des Reflexionsfaktors ($S_{11}$) und des Stehwellenverhältnisses (VSWR).
 
 ---
 
@@ -15,7 +15,7 @@ Das Projekt beinhaltet analytische Berechnungen über Kettenmatrizen (ABCD), ein
 ```text
 ├── cad/                                        # 3D-CAD-Modelle und PCB-Layoutdateien
 │   └── .gitkeep
-├── calculations/                               # Mathematische Modelle (Mathcad, SMath, Analytik)
+├── calculations/                               # Mathematische Modelle (Mathcad, SMath)
 │   └── .gitkeep
 ├── docs/
 │   └── images/                                 # Dokumentationsgrafiken, Schaltpläne und Simulationsergebnisse
@@ -35,9 +35,9 @@ Das Projekt beinhaltet analytische Berechnungen über Kettenmatrizen (ABCD), ein
 
 ---
 
-## Analytische Berechnung
+## Transistorparameter
 
-Der aktive Transistor wird als lineares Viertor (Zweitor) modelliert, das bei $f_0 = 1,2\text{ GHz}$ durch folgende Streuparameter bezogen auf ein Bezugssystem von $Z_0 = 50\ \Omega$ spezifiziert ist:
+Das aktive Bauelement ist als lineares Viertor/Zweitor modelliert (`S2P_BLK ID=X1`). Bei der Betriebsfrequenz $f_0 = 1,2\text{ GHz}$ lauten die Streuparameter bezogen auf ein Bezugssystem von $Z_0 = 50\ \Omega$:
 
 $$\begin{aligned}
 S_{11} &= 0,96198 \angle 178,34^\circ \\
@@ -46,43 +46,11 @@ S_{12} &= 0,03660 \angle 80,3997^\circ \\
 S_{22} &= 0,93364 \angle -178,72^\circ
 \end{aligned}$$
 
-### Ermittlung der charakteristischen Torimpedanzen
-
-Die intrinsischen Torimpedanzen des Transistors werden mittels bilinearer Transformation berechnet:
-
-$$Z_{in} = Z_0 \frac{1 + S_{11}}{1 - S_{11}} \approx 0,9691 + j0,7241\ \Omega$$
-
-$$Z_{out} = Z_0 \frac{1 + S_{22}}{1 - S_{22}} \approx 1,7161 - j0,5579\ \Omega$$
-
-Die Werte weisen sehr geringe Realteile ($R_{in} < 1\ \Omega$, $R_{out} < 2\ \Omega$) auf, was für HF-Leistungs-MOSFETs im UHF-Bereich charakteristisch ist. Die Aufgabe des Netzwerks besteht in der reflexionsarmen Transformation auf $50\ \Omega$.
-
-### Synthese der reaktiven L-Anpassungsglieder
-
-Aufgrund der Bedingung $R_0 = 50\ \Omega > R_{in}, R_{out}$ werden Parallelkomponenten an den $50\ \Omega$-Toren und Serienkomponenten an den niederohmigen Transistoranschlüssen angeordnet:
-1. **Eingangsnetzwerk (Tor 1 $\rightarrow$ Gate)**:
-   - Parallele Kapazität $C_1 = 21,8\text{ pF}$ am $50\ \Omega$-Quelltor zur Transformation des Leitwerts.
-   - Serieninduktivität $L_1 = 0,862\text{ nH}$ in Reihe zum Gate zur Kompensation der verbleibenden Suszeptanz.
-2. **Ausgangsnetzwerk (Drain $\rightarrow$ Tor 2)**:
-   - Serieninduktivität $L_2 = 1,400\text{ nH}$ unmittelbar am Drain-Anschluss.
-   - Parallele Kapazität $C_2 = 16,4\text{ pF}$ am $50\ \Omega$-Lasttor.
-
-### Kaskadenanalyse mittels ABCD-Kettenmatrizen
-
-Die Gesamtschaltung wird analytisch über Übertragungsmatrizen modelliert:
-
-$$[M_{gesamt}] = \begin{bmatrix} 1 & 0 \\ j\omega C_1 & 1 \end{bmatrix} \begin{bmatrix} 1 & j\omega L_1 \\ 0 & 1 \end{bmatrix} [M_{trans}] \begin{bmatrix} 1 & j\omega L_2 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ j\omega C_2 & 1 \end{bmatrix}$$
-
-Ergebnisse der theoretischen Berechnung bei $1,2\text{ GHz}$:
-- Eingangsreflexionsfaktor: $|S_{11}| = 0,1205$ ($-18,38\text{ dB}$)
-- Ausgangsreflexionsfaktor: $|S_{22}| = 0,1211$ ($-18,34\text{ dB}$)
-- Vorwärtsübertragungsgewinn: $|S_{21}| = 2,0278$ ($+6,14\text{ dB}$)
-- Stehwellenverhältnis: $\text{VSWR}_1 = 1,274$, $\text{VSWR}_2 = 1,276$
-
 ---
 
-## Schaltungsentwurf
+## Schaltungsaufbau
 
-Die numerische Schaltungssimulation wurde in Cadence AWR Microwave Office aufgebaut.
+Die Schaltungssimulation wurde in Cadence AWR Microwave Office erstellt.
 
 <p align="center">
   <img src="docs/images/schematic_2sk2974_matching_1200mhz.png" alt="Schaltplan 2SK2974 Anpassung" width="850"/>
@@ -90,11 +58,15 @@ Die numerische Schaltungssimulation wurde in Cadence AWR Microwave Office aufgeb
   <em>Abbildung 1 — Prinzipschaltbild des 2SK2974-Anpassungsnetzwerks bei 1,2 GHz (Cadence AWR MWO)</em>
 </p>
 
-### Beschreibung der Komponenten
-- **HF-Abschlüsse**: Unsymmetrische $50\ \Omega$-Tore `PORT P=1` und `PORT P=2`.
-- **Transistormodell**: Zweitor-Streuparameter-Block `S2P_BLK ID=X1` mit den Messdaten des 2SK2974.
-- **Eingangszweig**: Parallelkondensator `CAP ID=C1` ($C = 21,8\text{ pF}$) gegen Masse und Serieninduktivität `IND ID=L1` ($L = 0,862\text{ nH}$).
-- **Ausgangszweig**: Serieninduktivität `IND ID=L2` ($L = 1,4\text{ nH}$) und Parallelkondensator `CAP ID=C2` ($C = 16,4\text{ pF}$) gegen Masse.
+### Schaltungselemente
+- **Tore**: `PORT P=1` ($Z = 50\ \Omega$) und `PORT P=2` ($Z = 50\ \Omega$).
+- **Eingangsanpassung**:
+  - Parallelkondensator `CAP ID=C1`: $C = 21,8\text{ pF}$ (zwischen Tor 1 und Masse).
+  - Serieninduktivität `IND ID=L1`: $L = 0,862\text{ nH}$ (zwischen C1-Knoten und Transistoreingang).
+- **Aktives Bauelement**: `S2P_BLK ID=X1` mit den Streuparametern des 2SK2974 bei 1,2 GHz.
+- **Ausgangsanpassung**:
+  - Serieninduktivität `IND ID=L2`: $L = 1,4\text{ nH}$ (am Transistorausgang).
+  - Parallelkondensator `CAP ID=C2`: $C = 16,4\text{ pF}$ (vor Tor 2 gegen Masse).
 
 ---
 
@@ -104,8 +76,6 @@ Die Simulation wurde im Frequenzbereich von $0$ bis $2000\text{ MHz}$ durchgefü
 
 ### Smith-Diagramme ($S_{11}$ und $S_{22}$)
 
-Die normierten Reflexionsfaktoren sind in den folgenden Smith-Diagrammen dargestellt.
-
 <p align="center">
   <img src="docs/images/smith_chart_s11_matching.png" alt="S11 Smith-Diagramm" width="48%"/>
   <img src="docs/images/smith_chart_s22_matching.png" alt="S22 Smith-Diagramm" width="48%"/>
@@ -113,7 +83,7 @@ Die normierten Reflexionsfaktoren sind in den folgenden Smith-Diagrammen dargest
   <em>Abbildung 2 — Impedanzortskurven für Tor 1 (links) und Tor 2 (rechts) im Smith-Diagramm</em>
 </p>
 
-Bei der Zielbetriebsfrequenz von $1200\text{ MHz}$ treffen die Ortskurven beider Tore präzise den Koordinatenursprung des Diagramms ($z \approx 1,0 + j0,0$), was eine vollständige Kompensation der Blindanteile und Transformation der Wirkanteile belegt.
+Bei der Betriebsfrequenz von $1200\text{ MHz}$ verlaufen die Ortskurven beider Tore durch das Zentrum des Smith-Diagramms ($50\ \Omega$, normiert $1,0 + j0,0$).
 
 ### Frequenzgang der Eingangsreflexion ($S_{11}$)
 
@@ -123,8 +93,8 @@ Bei der Zielbetriebsfrequenz von $1200\text{ MHz}$ treffen die Ortskurven beider
   <em>Abbildung 3 — Betrag des Eingangsreflexionsfaktors |S11| (dB) über der Frequenz</em>
 </p>
 
-- Bei $1200\text{ MHz}$ zeigt die Kennlinie eine scharfe Resonanzsenke mit **$-18,32\text{ dB}$** (reflektierte Leistung $< 1,5\%$).
-- Die Anpassbandbreite für das Kriterium $|S_{11}| \le -10\text{ dB}$ erstreckt sich von $1130\text{ MHz}$ bis $1240\text{ MHz}$ ($\Delta f \approx 110\text{ MHz}$, relative Bandbreite $\approx 9,2\%$).
+- Bei $1200\text{ MHz}$ zeigt der Marker $|S_{11}| =$ **$-18,32\text{ dB}$**.
+- Die Bandbreite für $|S_{11}| \le -10\text{ dB}$ reicht von ca. $1130\text{ MHz}$ bis $1240\text{ MHz}$.
 
 ### Stehwellenverhältnis (VSWR)
 
@@ -134,19 +104,8 @@ Bei der Zielbetriebsfrequenz von $1200\text{ MHz}$ treffen die Ortskurven beider
   <em>Abbildung 4 — Frequenzabhängigkeit des Stehwellenverhältnisses (VSWR) am Eingang</em>
 </p>
 
-- Bei Resonanz liegt das Stehwellenverhältnis im Bereich von **$1,27 - 1,36$** (der Marker bei $1204\text{ MHz}$ zeigt einen Wert von $\text{VSWR} = 1,362$).
-- Das Kriterium eines zulässigen Stehwellenverhältnisses ($\text{VSWR} \le 2,0$) wird im gesamten Nutzfrequenzkanal um $1,2\text{ GHz}$ zuverlässig eingehalten.
-
-### Übereinstimmung von Modell und Berechnung
-
-| Parameter | Analytische Berechnung (ABCD) | Numerische Simulation (AWR MWO) | Abweichung |
-| :--- | :---: | :---: | :---: |
-| Resonanzfrequenz $f_0$ | $1200\text{ MHz}$ | $1200\text{ MHz}$ | $0,0\%$ |
-| Eingangsreflexion $\|S_{11}\|$ | $-18,38\text{ dB}$ | $-18,32\text{ dB}$ | $0,06\text{ dB}$ |
-| Ausgangsreflexion $\|S_{22}\|$ | $-18,34\text{ dB}$ | $-18,30\text{ dB}$ | $0,04\text{ dB}$ |
-| Stehwellenverhältnis Eingang ($\text{VSWR}_1$) | $1,274$ | $1,28 - 1,36$ | innerhalb der Toleranz |
-
-Die numerischen Daten aus Cadence AWR Microwave Office weisen eine sehr hohe Übereinstimmung mit dem analytischen Modell auf.
+- Bei $1204\text{ MHz}$ beträgt das Stehwellenverhältnis laut Marker $\text{VSWR} =$ **$1,362$**.
+- Bei $1200\text{ MHz}$ liegt der Wert bei $\text{VSWR} < 1,4$.
 
 ---
 
