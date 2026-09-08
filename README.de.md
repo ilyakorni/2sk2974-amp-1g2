@@ -113,11 +113,10 @@ Bei der Betriebsfrequenz von $1200\text{ MHz}$ verlaufen die Ortskurven beider T
 
 Copyright (c) 2026 Ilya Kornilov
 
-Diese Quelle beschreibt Open Hardware und ist unter der CERN-OHL-P v2 lizenziert. 
-Sie dürfen diese Quelle gemäß den Bedingungen der CERN-OHL-P v2 (https://cern.ch/cern-ohl) 
-weitergeben, modifizieren und Produkte unter Verwendung dieser Quelle herstellen.
+Diese Quelle beschreibt Open Hardware (offene Hardware) und ist unter der CERN-OHL-P v2 lizenziert. 
+Sie dürfen diese Quelle unter den Bedingungen der CERN-OHL-P v2 (https://cern.ch/cern-ohl) 
+weiterverbreiten, modifizieren und Produkte auf deren Grundlage herstellen.
 
-Diese Quelle wird OHNE JEDE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG 
-BEREITGESTELLT, EINSCHLIESSLICH DER MARKTGÄNGIGKEIT, ZUFRIEDENSTELLENDEN QUALITÄT 
-UND EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Bitte beachten Sie die CERN-OHL-P v2 
-für die geltenden Bedingungen.
+Diese Quelle wird OHNE JEGLICHE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG vertrieben, 
+EINSCHLIESSLICH DER GEWÄHRLEISTUNG DER MARKTGÄNGIGKEIT, ZUFRIEDENSTELLENDEN QUALITÄT ODER EIGNUNG 
+FÜR EINEN BESTIMMTEN ZWECK. Die geltenden Bedingungen entnehmen Sie bitte der CERN-OHL-P v2.
