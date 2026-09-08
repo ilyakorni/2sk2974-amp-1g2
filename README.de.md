@@ -20,6 +20,7 @@ Die Schaltungssimulation wurde in **Cadence AWR Microwave Office (MWO)** durchge
 ├── docs/
 │   └── images/                                 # Dokumentationsgrafiken, Schaltpläne und Simulationsergebnisse
 │       ├── plot_s11_frequency_response.png     # Frequenzgang des Eingangsreflexionsfaktors |S11| (dB)
+│       ├── plot_s21_frequency_response.png     # Frequenzgang des Vorwärtsübertragungsfaktors |S21| (dB)
 │       ├── plot_vswr_frequency_response.png    # Frequenzgang des Stehwellenverhältnisses (VSWR)
 │       ├── schematic_2sk2974_matching_1200mhz.png # Schaltplan in Cadence AWR Microwave Office
 │       ├── smith_chart_s11_matching.png        # Smith-Diagramm für S11
@@ -96,12 +97,23 @@ Bei der Betriebsfrequenz von $1200\text{ MHz}$ verlaufen die Ortskurven beider T
 - Bei $1200\text{ MHz}$ zeigt der Marker $|S_{11}| =$ **$-18,32\text{ dB}$**.
 - Die Bandbreite für $|S_{11}| \le -10\text{ dB}$ reicht von ca. $1130\text{ MHz}$ bis $1240\text{ MHz}$.
 
+### Vorwärtsübertragungsfaktor ($S_{21}$)
+
+<p align="center">
+  <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequenzgang" width="750"/>
+  <br>
+  <em>Abbildung 4 — Betrag des Vorwärtsübertragungsfaktors |S21| (dB) über der Frequenz</em>
+</p>
+
+- Bei der Betriebsfrequenz von $1200\text{ MHz}$ erreicht der Vorwärtsübertragungsfaktor sein Maximum von $|S_{21}| =$ **$+6,141\text{ dB}$** (Stufenverstärkung).
+- Außerhalb des Anpassungsbereichs fällt die Übertragungskennlinie ab.
+
 ### Stehwellenverhältnis (VSWR)
 
 <p align="center">
   <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequenzgang" width="750"/>
   <br>
-  <em>Abbildung 4 — Frequenzabhängigkeit des Stehwellenverhältnisses (VSWR) am Eingang</em>
+  <em>Abbildung 5 — Frequenzabhängigkeit des Stehwellenverhältnisses (VSWR) am Eingang</em>
 </p>
 
 - Bei $1204\text{ MHz}$ beträgt das Stehwellenverhältnis laut Marker $\text{VSWR} =$ **$1,362$**.

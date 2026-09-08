@@ -20,6 +20,7 @@ Circuit simulation was performed in **Cadence AWR Microwave Office (MWO)**. The 
 ├── docs/
 │   └── images/                                 # Documentation figures, schematics, and simulation plots
 │       ├── plot_s11_frequency_response.png     # |S11| (dB) vs frequency plot
+│       ├── plot_s21_frequency_response.png     # |S21| (dB) transmission gain vs frequency plot
 │       ├── plot_vswr_frequency_response.png    # VSWR vs frequency plot
 │       ├── schematic_2sk2974_matching_1200mhz.png # AWR Microwave Office schematic diagram
 │       ├── smith_chart_s11_matching.png        # Input S11 Smith chart impedance locus
@@ -96,12 +97,23 @@ At the target frequency of $1200\text{ MHz}$, both reflection loci pass through 
 - At $1200\text{ MHz}$, the marker records $|S_{11}| =$ **$-18.32\text{ dB}$**.
 - The matching bandwidth for $|S_{11}| \le -10\text{ dB}$ spans from approximately $1130\text{ MHz}$ to $1240\text{ MHz}$.
 
+### Forward Transmission Gain ($S_{21}$)
+
+<p align="center">
+  <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequency Response" width="750"/>
+  <br>
+  <em>Figure 4 — Forward transmission coefficient |S21| (dB) versus frequency</em>
+</p>
+
+- At the operating frequency $1200\text{ MHz}$, the forward transmission coefficient reaches its peak value of $|S_{21}| =$ **$+6.141\text{ dB}$** (stage gain).
+- The transmission response rolls off outside the matching passband.
+
 ### Voltage Standing Wave Ratio (VSWR)
 
 <p align="center">
   <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequency Response" width="750"/>
   <br>
-  <em>Figure 4 — Voltage Standing Wave Ratio (VSWR) versus frequency</em>
+  <em>Figure 5 — Voltage Standing Wave Ratio (VSWR) versus frequency</em>
 </p>
 
 - At $1204\text{ MHz}$, the marker records $\text{VSWR} =$ **$1.362$**.
