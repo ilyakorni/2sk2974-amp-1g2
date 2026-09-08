@@ -1,0 +1,42 @@
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Cadence AWR Microwave Office temporary & backup files
+*.asv
+*.bak
+*.tmp
+*.dta
+*.$$$
+*.log
+*.err
+*~
+*.dmp
+*.sch.bak
+*.layout.bak
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE / Editor folders
+.idea/
+.vscode/
+*.swp
+*.swo
+cad/.gitkeep
+calculations/.gitkeep
