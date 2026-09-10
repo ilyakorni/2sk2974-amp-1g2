@@ -2,11 +2,15 @@
   <a href="README.md">Русский</a> | <b>English</b> | <a href="README.de.md">Deutsch</a>
 </p>
 
-# 2sk2974-1g2-match: UHF 2SK2974 MOSFET Impedance Matching Network at 1.2 GHz
+# 2sk2974-1g2-match: UHF 2SK2974 Power Amplifier Matching Network at 1.2 GHz
 
-This repository contains the simulation project of a lumped-element reactive impedance matching network for the **2SK2974** UHF N-channel power MOSFET operating at **1.2 GHz (1200 MHz)**. The network matches the two-port active device to $50\ \Omega$ reference ports.
+This repository contains the numerical simulation and layout design of an impedance matching network and power amplifier stage based on the **2SK2974** UHF N-channel power MOSFET operating at **1.2 GHz (1200 MHz)** with $50\ \Omega$ reference ports.
 
-Circuit simulation was performed in **Cadence AWR Microwave Office (MWO)**. The repository contains the schematic, Smith chart locus plots, and frequency response curves for input reflection ($S_{11}$) and Voltage Standing Wave Ratio (VSWR).
+The project is developed in **Cadence AWR Microwave Office (MWO)** and includes:
+1. Ideal lumped-element matching network (L-sections).
+2. Distributed microstrip circuit model taking into account dielectric substrate parameters, bias feed stubs, and measured SMA connector transitions.
+3. 2D Printed Circuit Board (PCB) layout.
+4. Smith chart impedance loci, reflection coefficient ($S_{11}$), forward transmission gain ($S_{21}$), and Voltage Standing Wave Ratio (VSWR).
 
 ---
 
@@ -19,14 +23,20 @@ Circuit simulation was performed in **Cadence AWR Microwave Office (MWO)**. The 
 │   └── .gitkeep
 ├── docs/
 │   └── images/                                 # Documentation figures, schematics, and simulation plots
-│       ├── plot_s11_frequency_response.png     # |S11| (dB) vs frequency plot
-│       ├── plot_s21_frequency_response.png     # |S21| (dB) transmission gain vs frequency plot
-│       ├── plot_vswr_frequency_response.png    # VSWR vs frequency plot
-│       ├── schematic_2sk2974_matching_1200mhz.png # AWR Microwave Office schematic diagram
-│       ├── smith_chart_s11_matching.png        # Input S11 Smith chart impedance locus
-│       └── smith_chart_s22_matching.png        # Output S22 Smith chart impedance locus
-├── simulation/                                 # Numerical simulation workspace
-│   └── transistor_2sk2974_matching_1200mhz.emp # Cadence AWR Microwave Office project file
+│       ├── layout_pcb_amplifier_2sk2974.png    # 2D PCB layout of the amplifier in AWR MWO
+│       ├── plot_microstrip_s21_gain.png        # Microstrip forward transmission gain |S21| plot
+│       ├── plot_microstrip_vswr.png            # Microstrip Port 1 and Port 2 VSWR plot
+│       ├── plot_s11_frequency_response.png     # |S11| (dB) vs frequency plot (ideal circuit)
+│       ├── plot_s21_frequency_response.png     # |S21| (dB) transmission gain plot (ideal circuit)
+│       ├── plot_vswr_frequency_response.png    # VSWR vs frequency plot (ideal circuit)
+│       ├── schematic_2sk2974_matching_1200mhz.png # Ideal lumped matching circuit schematic
+│       ├── schematic_microstrip_pa_2sk2974.png # Microstrip amplifier schematic with bias and SMA
+│       ├── smith_chart_microstrip_s11_s22.png  # Smith chart S11 & S22 of microstrip circuit
+│       ├── smith_chart_s11_matching.png        # Input S11 Smith chart (ideal circuit)
+│       └── smith_chart_s22_matching.png        # Output S22 Smith chart (ideal circuit)
+├── simulation/                                 # Cadence AWR Microwave Office project files
+│   ├── amplifier_2sk2974_1200mhz_microstrip.emp # Project with microstrip schematic, SMA, and layout
+│   └── transistor_2sk2974_matching_1200mhz.emp  # Project with ideal lumped elements
 ├── .gitignore                                  # Git exclusion rules for CAD and OS artifacts
 ├── LICENSE                                     # Full text of CERN-OHL-P v2 license
 ├── README.de.md                                # German documentation
@@ -49,75 +59,99 @@ S_{22} &= 0.93364 \angle -178.72^\circ
 
 ---
 
-## Circuit Modeling
+## Circuit Modeling & PCB Layout
 
-The electrical circuit simulation is configured in Cadence AWR Microwave Office.
+### 1. Ideal Lumped-Element Matching Circuit
 
 <p align="center">
   <img src="docs/images/schematic_2sk2974_matching_1200mhz.png" alt="2SK2974 Matching Schematic" width="850"/>
   <br>
-  <em>Figure 1 — Circuit schematic of the 2SK2974 matching network at 1.2 GHz in Cadence AWR MWO</em>
+  <em>Figure 1 — Circuit schematic of ideal 2SK2974 matching network at 1.2 GHz</em>
 </p>
 
-### Schematic Elements
-- **RF Ports**: `PORT P=1` ($Z = 50\ \Omega$) and `PORT P=2` ($Z = 50\ \Omega$).
-- **Input Matching Circuit**:
-  - Shunt capacitor `CAP ID=C1`: $C = 21.8\text{ pF}$ (connected between Port 1 and ground).
-  - Series inductor `IND ID=L1`: $L = 0.862\text{ nH}$ (between C1 node and transistor input).
-- **Active Device**: `S2P_BLK ID=X1` with 2SK2974 scattering parameters at 1.2 GHz.
-- **Output Matching Circuit**:
-  - Series inductor `IND ID=L2`: $L = 1.4\text{ nH}$ (connected to transistor output).
-  - Shunt capacitor `CAP ID=C2`: $C = 16.4\text{ pF}$ (connected between L2 output and ground before Port 2).
+- **Ports**: `PORT P=1` ($Z = 50\ \Omega$) and `PORT P=2` ($Z = 50\ \Omega$).
+- **Input Matching Circuit**: shunt capacitor `C1 = 21.8 pF` and series inductor `L1 = 0.862 nH`.
+- **Output Matching Circuit**: series inductor `L2 = 1.4 nH` and shunt capacitor `C2 = 16.4 pF`.
+
+### 2. Microstrip Circuit with Bias Networks and SMA Connectors
+
+<p align="center">
+  <img src="docs/images/schematic_microstrip_pa_2sk2974.png" alt="Microstrip Amplifier Schematic" width="850"/>
+  <br>
+  <em>Figure 2 — Microstrip amplifier schematic with bias decoupling stubs and measured SMA connector subcircuits</em>
+</p>
+
+- **Substrate Parameters (`MSUB ID=SUB1`)**:
+  - Relative dielectric constant: $\varepsilon_r = 4.5$ (FR-4)
+  - Substrate thickness: $H = 1.0\text{ mm}$
+  - Copper cladding thickness: $T = 0.035\text{ mm}$ ($35\ \mu\text{m}$)
+  - Dielectric loss tangent: $\tan\delta = 0.015$
+  - Conductor bulk resistivity: $\rho = 0.0172$
+- **RF Connectors**: subcircuits `SUBCKT NET="SMA_Measured_Thru"` representing measured S-parameters of end-launch SMA connectors.
+- **DC-Blocking Capacitors**: `C2 = 10000 pF` ($10\text{ nF}$) and `C3 = 10000 pF` ($10\text{ nF}$) for input/output isolation.
+- **Gate and Drain Bias Networks**: quarter-wave microstrip stubs `MLIN` ($W = 17.577\text{ mm}$, $L = 34.603\text{ mm}$) terminated in RF bypass capacitors `C5, C6 = 10000 pF` to ground.
+- **Microstrip T-Junctions**: `MTEE` elements with branch widths $W_1 = W_2 = W_3 = 1\text{ mm}$.
+
+### 3. PCB Layout
+
+<p align="center">
+  <img src="docs/images/layout_pcb_amplifier_2sk2974.png" alt="2SK2974 Amplifier PCB Layout" width="850"/>
+  <br>
+  <em>Figure 3 — 2D PCB microstrip layout generated in Cadence AWR Microwave Office</em>
+</p>
+
+The layout accommodates the power transistor mounting flange with screw holes for heatsink attachment, wide bias stubs, SMD passive pads, and end-launch SMA connector mounting pads.
 
 ---
 
 ## Simulation Results
 
-Numerical simulation was performed over the frequency sweep from $0$ to $2000\text{ MHz}$.
-
-### Smith Chart Impedance Matching ($S_{11}$ and $S_{22}$)
+### 1. Lumped-Element Model Results
 
 <p align="center">
   <img src="docs/images/smith_chart_s11_matching.png" alt="S11 Smith Chart" width="48%"/>
   <img src="docs/images/smith_chart_s22_matching.png" alt="S22 Smith Chart" width="48%"/>
   <br>
-  <em>Figure 2 — Smith chart trajectories for input S11 (left) and output S22 (right)</em>
+  <em>Figure 4 — Smith chart reflection loci for ideal circuit: S11 (left) and S22 (right)</em>
 </p>
-
-At the target frequency of $1200\text{ MHz}$, both reflection loci pass through the normalized center of the Smith chart ($50\ \Omega$, normalized $1.0 + j0.0$).
-
-### Input Reflection Response ($S_{11}$)
 
 <p align="center">
-  <img src="docs/images/plot_s11_frequency_response.png" alt="S11 Frequency Response" width="750"/>
+  <img src="docs/images/plot_s11_frequency_response.png" alt="S11 Frequency Response" width="48%"/>
+  <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequency Response" width="48%"/>
   <br>
-  <em>Figure 3 — Logarithmic magnitude of input reflection coefficient |S11| (dB) versus frequency</em>
+  <em>Figure 5 — Frequency response of input reflection |S11| (left) and forward gain |S21| (right)</em>
 </p>
-
-- At $1200\text{ MHz}$, the marker records $|S_{11}| =$ **$-18.32\text{ dB}$**.
-- The matching bandwidth for $|S_{11}| \le -10\text{ dB}$ spans from approximately $1130\text{ MHz}$ to $1240\text{ MHz}$.
-
-### Forward Transmission Gain ($S_{21}$)
 
 <p align="center">
-  <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequency Response" width="750"/>
+  <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequency Response" width="700"/>
   <br>
-  <em>Figure 4 — Forward transmission coefficient |S21| (dB) versus frequency</em>
+  <em>Figure 6 — Voltage Standing Wave Ratio (VSWR) versus frequency for ideal model</em>
 </p>
 
-- At the operating frequency $1200\text{ MHz}$, the forward transmission coefficient reaches its peak value of $|S_{21}| =$ **$+6.141\text{ dB}$** (stage gain).
-- The transmission response rolls off outside the matching passband.
+- Input reflection coefficient at $1200\text{ MHz}$: $|S_{11}| = -18.32\text{ dB}$.
+- Forward transmission coefficient: $|S_{21}| = +6.141\text{ dB}$.
+- Resonance VSWR: $\text{VSWR} \approx 1.27 - 1.36$ ($1.362$ at $1204\text{ MHz}$).
 
-### Voltage Standing Wave Ratio (VSWR)
+### 2. Microstrip Circuit Model Results (with Bias and SMA Transitions)
 
 <p align="center">
-  <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequency Response" width="750"/>
+  <img src="docs/images/smith_chart_microstrip_s11_s22.png" alt="Microstrip Smith Chart" width="600"/>
   <br>
-  <em>Figure 5 — Voltage Standing Wave Ratio (VSWR) versus frequency</em>
+  <em>Figure 7 — Smith chart impedance plot for microstrip circuit: S11 (triangle) and S22 (square) at 1.2 GHz</em>
 </p>
 
-- At $1204\text{ MHz}$, the marker records $\text{VSWR} =$ **$1.362$**.
-- At the target frequency $1200\text{ MHz}$, the input match achieves $\text{VSWR} < 1.4$.
+<p align="center">
+  <img src="docs/images/plot_microstrip_vswr.png" alt="Microstrip VSWR" width="48%"/>
+  <img src="docs/images/plot_microstrip_s21_gain.png" alt="Microstrip Gain" width="48%"/>
+  <br>
+  <em>Figure 8 — Microstrip circuit performance at 1.2 GHz: Port 1 & 2 VSWR (left) and forward gain |S21| (right)</em>
+</p>
+
+- **Impedance Match on Smith Chart**: $S(1,1)$ and $S(2,2)$ at $1.2\text{ GHz}$ are positioned close to the normalized center ($50\ \Omega$).
+- **Port VSWR**:
+  - $\text{VSWR}_1$ (input port): **$1.442$**
+  - $\text{VSWR}_2$ (output port): **$1.308$**
+- **Forward Gain**: accounting for physical dielectric loss in FR-4 ($\tan\delta = 0.015$), conductor losses, and SMA transition discontinuities, forward transmission $|S_{21}|$ at $1.2\text{ GHz}$ is **$+4.710\text{ dB}$** ($4.7097\text{ dB}$).
 
 ---
 
