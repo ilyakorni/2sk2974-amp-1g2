@@ -175,10 +175,15 @@ The layout accommodates the power transistor flange mounting footprint ([`cad/2s
 </p>
 
 <p align="center">
-  <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="SMD Circuit VSWR" width="48%"/>
-  <img src="docs/images/plot_smd_s21_gain.png" alt="SMD Circuit Gain" width="48%"/>
+  <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="SMD Circuit VSWR" width="750"/>
   <br>
-  <em>Figure 11 — Wideband performance (0.5–1.5 GHz) with vendor SMD components: VSWR (left) and forward gain |S21| (right)</em>
+  <em>Figure 11 — Frequency response of VSWR with vendor SMD components across 0.5–1.5 GHz</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/plot_smd_s21_gain.png" alt="SMD Circuit Gain" width="750"/>
+  <br>
+  <em>Figure 12 — Frequency response of forward transmission gain |S21| across 0.5–1.5 GHz</em>
 </p>
 
 - **Smith Chart Impedance Match**: markers for $S(1,1)$ and $S(2,2)$ over $1.20 - 1.21\text{ GHz}$ are positioned directly at the $50\ \Omega$ center.

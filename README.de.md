@@ -175,10 +175,15 @@ Das Layout beinhaltet die Montagefläche des 2SK2974-Gehäuses ([`cad/2sk2974_aw
 </p>
 
 <p align="center">
-  <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="VSWR SMD-Schaltung" width="48%"/>
-  <img src="docs/images/plot_smd_s21_gain.png" alt="Verstärkung SMD-Schaltung" width="48%"/>
+  <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="VSWR SMD-Schaltung" width="750"/>
   <br>
-  <em>Abbildung 11 — Breitbandverhalten (0,5–1,5 GHz) mit realen SMD-Komponenten: VSWR (links) und Übertragungsgewinn |S21| (rechts)</em>
+  <em>Abbildung 11 — Frequenzgang des Stehwellenverhältnisses (VSWR) mit realen SMD-Komponenten im Bereich 0,5–1,5 GHz</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/plot_smd_s21_gain.png" alt="Verstärkung SMD-Schaltung" width="750"/>
+  <br>
+  <em>Abbildung 12 — Frequenzgang des Vorwärtsübertragungsgewinns |S21| im Bereich 0,5–1,5 GHz</em>
 </p>
 
 - **Smith-Diagramm**: Die Marker $S(1,1)$ und $S(2,2)$ im Band $1,20 - 1,21\text{ GHz}$ treffen präzise das $50\ \Omega$-Zentrum.
