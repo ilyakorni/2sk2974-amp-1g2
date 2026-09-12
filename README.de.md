@@ -22,7 +22,6 @@ Das Projekt wurde in **Cadence AWR Microwave Office (MWO)** entwickelt und veran
 │   └── .gitkeep
 ├── docs/
 │   └── images/                                 # Dokumentationsgrafiken, Schaltpläne und Simulationsergebnisse
-│       ├── layout_pcb_amplifier_2sk2974.png    # Basis-Leiterplattenlayout in AWR MWO
 │       ├── layout_pcb_smd_amplifier_2sk2974.png # Detailliertes Layout mit SMD-Lötpads
 │       ├── plot_microstrip_s21_gain.png        # Vorwärtsübertragungsgewinn |S21| der Streifenleitungsschaltung
 │       ├── plot_microstrip_vswr.png            # Stehwellenverhältnis (VSWR) der Tore 1 und 2
@@ -112,10 +111,9 @@ S_{22} &= 0,93364 \angle -178,72^\circ
 ### 4. Leiterplattenlayout (PCB Layout)
 
 <p align="center">
-  <img src="docs/images/layout_pcb_amplifier_2sk2974.png" alt="Basis-PCB-Layout" width="48%"/>
-  <img src="docs/images/layout_pcb_smd_amplifier_2sk2974.png" alt="Detailliertes SMD-PCB-Layout" width="48%"/>
+  <img src="docs/images/layout_pcb_smd_amplifier_2sk2974.png" alt="Leiterplattenlayout Verstärker 2SK2974" width="850"/>
   <br>
-  <em>Abbildung 4 — PCB-Layoutansichten in AWR MWO: Basiskonfiguration (links) und detailliertes Layout mit SMD-Lötpads (rechts)</em>
+  <em>Abbildung 4 — 2D-Leiterplattenlayout in Cadence AWR Microwave Office mit SMD-Lötpads</em>
 </p>
 
 Das Layout beinhaltet die Montagefläche des 2SK2974-Gehäuses ([`cad/2sk2974_awr_footprint.dxf`](cad/2sk2974_awr_footprint.dxf)) mit Bohrungen zur Kühlkörperverschraubung, breite Vorspannungsflächen, SMD-Lötpads (ATC Case A und 0402) sowie End-Launch-SMA-Anschlussflächen.

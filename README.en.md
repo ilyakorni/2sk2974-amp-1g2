@@ -22,7 +22,6 @@ The project is developed in **Cadence AWR Microwave Office (MWO)** and illustrat
 │   └── .gitkeep
 ├── docs/
 │   └── images/                                 # Documentation figures, schematics, and simulation plots
-│       ├── layout_pcb_amplifier_2sk2974.png    # Baseline 2D PCB layout in AWR MWO
 │       ├── layout_pcb_smd_amplifier_2sk2974.png # Detailed PCB layout with vendor SMD component pads
 │       ├── plot_microstrip_s21_gain.png        # Microstrip forward transmission gain |S21| plot
 │       ├── plot_microstrip_vswr.png            # Microstrip Port 1 and Port 2 VSWR plot
@@ -112,10 +111,9 @@ S_{22} &= 0.93364 \angle -178.72^\circ
 ### 4. PCB Layout
 
 <p align="center">
-  <img src="docs/images/layout_pcb_amplifier_2sk2974.png" alt="Baseline PCB Layout" width="48%"/>
-  <img src="docs/images/layout_pcb_smd_amplifier_2sk2974.png" alt="Detailed PCB Layout with SMD Pads" width="48%"/>
+  <img src="docs/images/layout_pcb_smd_amplifier_2sk2974.png" alt="2SK2974 Amplifier PCB Layout" width="850"/>
   <br>
-  <em>Figure 4 — PCB layout views in AWR MWO: baseline configuration (left) and detailed layout with SMD solder pads (right)</em>
+  <em>Figure 4 — 2D PCB microstrip layout in Cadence AWR Microwave Office with SMD component footprints</em>
 </p>
 
 The layout accommodates the power transistor flange mounting footprint ([`cad/2sk2974_awr_footprint.dxf`](cad/2sk2974_awr_footprint.dxf)) with heatsink screw holes, wide bias decoupling polygons, SMD footprint lands (ATC Case A and 0402), and end-launch SMA connector contact pads.
