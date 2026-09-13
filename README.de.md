@@ -22,7 +22,9 @@ Das Projekt wurde in **Cadence AWR Microwave Office (MWO)** entwickelt und veran
 │   └── .gitkeep
 ├── docs/
 │   └── images/                                 # Dokumentationsgrafiken, Schaltpläne und Simulationsergebnisse
-│       ├── layout_pcb_smd_amplifier_2sk2974.png # Detailliertes Layout mit SMD-Lötpads
+│       ├── layout_pcb_smd_2d_dimension_x.png   # 2D-Leiterplattenlayout mit horizontaler Abmessung (32,38 mm)
+│       ├── layout_pcb_smd_2d_dimension_y.png   # 2D-Leiterplattenlayout mit vertikaler Abmessung (24,12 mm)
+│       ├── layout_pcb_smd_3d_view.png          # 3D-Modell der Leiterplattenbaugruppe
 │       ├── plot_microstrip_s21_gain.png        # Vorwärtsübertragungsgewinn |S21| der Streifenleitungsschaltung
 │       ├── plot_microstrip_vswr.png            # Stehwellenverhältnis (VSWR) der Tore 1 und 2
 │       ├── plot_s11_frequency_response.png     # Frequenzgang des Reflexionsfaktors |S11| (ideale Schaltung)
@@ -32,7 +34,8 @@ Das Projekt wurde in **Cadence AWR Microwave Office (MWO)** entwickelt und veran
 │       ├── plot_vswr_frequency_response.png    # Stehwellenverhältnis (VSWR) der idealen Schaltung
 │       ├── schematic_2sk2974_matching_1200mhz.png # Schaltplan der idealen Anpassungsschaltung
 │       ├── schematic_microstrip_pa_2sk2974.png # Streifenleitungsschaltplan mit Bias und SMA
-│       ├── schematic_microstrip_smd_2sk2974.png # Schaltplan mit realen Hersteller-SMD-Komponenten
+│       ├── schematic_smd_amplifier_2sk2974.png # HF-Signalpfad-Schaltplan mit realen SMD-Komponenten
+│       ├── schematic_smd_meander_bias_network.png # Lambda/4-Mäander-Vorspannungsnetzwerk mit C0G-Abblockkondensatoren
 │       ├── smith_chart_microstrip_s11_s22.png  # Smith-Diagramm S11 & S22 der Streifenleitungsschaltung
 │       ├── smith_chart_s11_matching.png        # Smith-Diagramm für S11 (ideale Schaltung)
 │       ├── smith_chart_s22_matching.png        # Smith-Diagramm für S22 (ideale Schaltung)
@@ -40,7 +43,7 @@ Das Projekt wurde in **Cadence AWR Microwave Office (MWO)** entwickelt und veran
 ├── simulation/                                 # Cadence AWR Microwave Office Projektdateien
 │   ├── 2sk2974.s2p                             # Gemessene Streuparameter des Transistors (Touchstone 50–1500 MHz)
 │   ├── amplifier_2sk2974_1200mhz_microstrip.emp # Projekt mit Streifenleitungsschaltung, SMA und Layout
-│   ├── amplifier_2sk2974_1200mhz_smd_layout.emp # Projekt mit realen SMD-Komponenten und detailliertem Layout
+│   ├── amplifier_2sk2974_1200mhz_smd_layout.emp # Projekt mit realen SMD-Komponenten, Mäanderleitungen und Layout
 │   └── transistor_2sk2974_matching_1200mhz.emp  # Projekt mit idealen konzentrierten Elementen
 ├── .gitignore                                  # Ausschlussregeln für EDA- und Betriebssystemdateien
 ├── LICENSE                                     # Vollständiger Lizenztext der CERN-OHL-P v2
@@ -96,27 +99,50 @@ S_{22} &= 0,93364 \angle -178,72^\circ
 ### 3. Reale Streifenleitungsschaltung mit SMD-Komponenten von Herstellern
 
 <p align="center">
-  <img src="docs/images/schematic_microstrip_smd_2sk2974.png" alt="SMD-Schaltplan 2SK2974" width="850"/>
+  <img src="docs/images/schematic_smd_amplifier_2sk2974.png" alt="SMD-HF-Signalpfad-Schaltplan 2SK2974" width="900"/>
   <br>
-  <em>Abbildung 3 — Streifenleitungsschaltplan mit realen ATC-Kondensatoren und Coilcraft-Induktivitätsmodellen</em>
+  <em>Abbildung 3 — Schaltplan des HF-Verstärkerpfads mit realen SMD-Komponenten in Cadence AWR Microwave Office</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/schematic_smd_meander_bias_network.png" alt="Lambda/4-Mäander-Vorspannungsdrosseln" width="900"/>
+  <br>
+  <em>Abbildung 4 — Lambda/4-Mäander-Vorspannungsleitungen mit C0G 1206 Abblockkondensatoren</em>
 </p>
 
 - **DC-Trennkapazitäten**: Keramische Präzisionskondensatoren ATC 700A — `SUBCKT ID=S6, S2 NET="700A102G"` ($1000\text{ pF}$).
-- **Eingangsparallelkapazität**: Parallelschaltung von ATC 100A-Kondensatoren — `SUBCKT ID=S9 NET="100A1R5B"` ($1,5\text{ pF}$) und `SUBCKT ID=S8 NET="100A120F"` ($12\text{ pF}$).
-- **Ausgangsserieninduktivität**: Präzisions-HF-Induktivität Bauform 0402 — `SUBCKT ID=S4 NET="L0402SEr56"` ($0,56\text{ nH}$).
-- **Ausgangsparallelkapazität**: ATC 100A-Kondensatoren — `SUBCKT ID=S7 NET="100A0R7"` ($0,7\text{ pF}$) und `SUBCKT ID=S5 NET="100A100F"` ($10\text{ pF}$).
+- **Eingangsparallelkapazität**: Parallelschaltung von ATC 100A-Kondensatoren — `SUBCKT ID=S9 NET="100A1R5B"` ($1,5\text{ pF}$) und `SUBCKT ID=S8 NET="100A120F"` ($12\text{ pF}$) (Gesamtkapazität $13,5\text{ pF}$).
+- **Ausgangsserieninduktivität**: Präzisions-Dünnfilm-HF-Induktivität Bauform 0402 AVX Accu-L — `SUBCKT ID=S4 NET="L0402SEr56"` ($0,56\text{ nH}$).
+- **Ausgangsparallelkapazität**: ATC 100A-Kondensatoren — `SUBCKT ID=S11 NET="100A0R5"` ($0,5\text{ pF}$) und `SUBCKT ID=S5 NET="100A100F"` ($10\text{ pF}$) (Gesamtkapazität $10,5\text{ pF}$).
+- **Vorspannungsnetzwerke (HF-Drosseln)**: Lambda/4-Leitungen als kompakte Mäander ausgeführt (`MBENDA` $90^\circ$ und `MLIN`-Segmente mit $W = 1,576\text{ mm}$ für $Z_0 = 50\ \Omega$), abgeschlossen mit HF-Abblockkondensatoren `SUBCKT ID=S13, S7 NET="c0g1206_2n2_100V_shunt"` ($2,2\text{ nF}$, $100\text{ V}$, SMD 1206, Dielektrikum C0G/NP0) nach Masse.
 - **Transistormodell**: Touchstone-Subschaltung `SUBCKT ID=S10 NET="2SK2974"` über `simulation/2sk2974.s2p`.
-- **Streifenleitungszuleitungen**: $50\ \Omega$-Leitungen `MLIN ID=TL5, TL6` ($W = 2\text{ mm}$, $L = 1\text{ mm}$) und T-Glieder `MTEE` ($W = 5\text{ mm}$).
+- **Streifenleitungszuleitungen und Steckverbinder**: $50\ \Omega$-Übergänge `SUBCKT NET="SMA_Measured_Thru"`, Leitungen `MLIN ID=TL5, TL6` ($W = 2\text{ mm}$, $L = 1\text{ mm}$) und T-Glieder `MTEE` ($W = 5\text{ mm}$).
 
 ### 4. Leiterplattenlayout (PCB Layout)
 
 <p align="center">
-  <img src="docs/images/layout_pcb_smd_amplifier_2sk2974.png" alt="Leiterplattenlayout Verstärker 2SK2974" width="850"/>
+  <img src="docs/images/layout_pcb_smd_2d_dimension_x.png" alt="2D-Leiterplattenlayout mit horizontaler Abmessung" width="850"/>
   <br>
-  <em>Abbildung 4 — 2D-Leiterplattenlayout in Cadence AWR Microwave Office mit SMD-Lötpads</em>
+  <em>Abbildung 5 — 2D-Leiterplattenlayout in AWR Microwave Office: Messung der Gesamtbreite ($32,38\text{ mm}$)</em>
 </p>
 
-Das Layout beinhaltet die Montagefläche des 2SK2974-Gehäuses ([`cad/2sk2974_awr_footprint.dxf`](cad/2sk2974_awr_footprint.dxf)) mit Bohrungen zur Kühlkörperverschraubung, breite Vorspannungsflächen, SMD-Lötpads (ATC Case A und 0402) sowie End-Launch-SMA-Anschlussflächen.
+<p align="center">
+  <img src="docs/images/layout_pcb_smd_2d_dimension_y.png" alt="2D-Leiterplattenlayout mit vertikaler Abmessung" width="850"/>
+  <br>
+  <em>Abbildung 6 — 2D-Leiterplattenlayout in AWR Microwave Office: Messung der Gesamthöhe ($24,12\text{ mm}$)</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/layout_pcb_smd_3d_view.png" alt="3D-Modell der Verstärkerbaugruppe 2SK2974" width="850"/>
+  <br>
+  <em>Abbildung 7 — 3D-Layoutansicht der kompletten Verstärkerbaugruppe (3D Layout View)</em>
+</p>
+
+- **Platinenabmessungen**: Ultrakompakte Baugruppe mit Außenmaßen von **$32,38 \times 24,12\text{ mm}$** (Substratfläche $\approx 7,8\text{ cm}^2$).
+- **Mäander-Vorspannungsdrosseln**: Hochfrequente Lambda/4-Zuleitungen für Gate und Drain sind als Mäander mit $90^\circ$-Gehrungswinkeln ausgeführt, was die Platinenhöhe um mehr als 50% reduziert.
+- **Versorgungsabblockung**: Lötpads für $2,2\text{ nF}$-SMD-Kondensatoren der Bauform 1206 mit niederinduktiver Durchkontaktierung (Via-Gruppen) zur Masselage.
+- **Abschirmung und Wärmeabfuhr**: Durchkontaktierungszaun (Via Fence) entlang der Signal- und Versorgungsleitungen, koplanare Masseflächen sowie zentrale Montageaussparung mit metallisierter Kontaktfläche für den Transistorflansch des 2SK2974 ([`cad/2sk2974_awr_footprint.dxf`](cad/2sk2974_awr_footprint.dxf)) zur Montage auf dem Kühlkörper.
+- **HF-Anschlüsse**: Stirnseitige Lötflächen für End-Launch-SMA-Buchsen für einen reflexionsarmen Übergang auf die $50\ \Omega$-Streifenleitungen.
 
 ---
 
@@ -128,20 +154,20 @@ Das Layout beinhaltet die Montagefläche des 2SK2974-Gehäuses ([`cad/2sk2974_aw
   <img src="docs/images/smith_chart_s11_matching.png" alt="S11 Smith-Diagramm" width="48%"/>
   <img src="docs/images/smith_chart_s22_matching.png" alt="S22 Smith-Diagramm" width="48%"/>
   <br>
-  <em>Abbildung 5 — Smith-Diagramme der idealen Schaltung: S11 (links) und S22 (rechts)</em>
+  <em>Abbildung 8 — Smith-Diagramme der idealen Schaltung: S11 (links) und S22 (rechts)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_s11_frequency_response.png" alt="S11 Frequenzgang" width="48%"/>
   <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequenzgang" width="48%"/>
   <br>
-  <em>Abbildung 6 — Frequenzgang von |S11| (links) und Übertragungsgewinn |S21| (rechts)</em>
+  <em>Abbildung 9 — Frequenzgang von |S11| (links) und Übertragungsgewinn |S21| (rechts)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequenzgang" width="700"/>
   <br>
-  <em>Abbildung 7 — Stehwellenverhältnis (VSWR) am Eingang der idealen Schaltung</em>
+  <em>Abbildung 10 — Stehwellenverhältnis (VSWR) am Eingang der idealen Schaltung</em>
 </p>
 
 - Eingangsreflexionsfaktor bei $1200\text{ MHz}$: $|S_{11}| = -18,32\text{ dB}$.
@@ -153,14 +179,14 @@ Das Layout beinhaltet die Montagefläche des 2SK2974-Gehäuses ([`cad/2sk2974_aw
 <p align="center">
   <img src="docs/images/smith_chart_microstrip_s11_s22.png" alt="Smith-Diagramm Streifenleitung" width="600"/>
   <br>
-  <em>Abbildung 8 — Smith-Diagramm für die Streifenleitungsschaltung: S11 (Dreieck) und S22 (Quadrat) bei 1,2 GHz</em>
+  <em>Abbildung 11 — Smith-Diagramm für die Streifenleitungsschaltung: S11 (Dreieck) und S22 (Quadrat) bei 1,2 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_microstrip_vswr.png" alt="VSWR Streifenleitung" width="48%"/>
   <img src="docs/images/plot_microstrip_s21_gain.png" alt="Verstärkung Streifenleitung" width="48%"/>
   <br>
-  <em>Abbildung 9 — Streifenleitungsverstärker bei 1,2 GHz: VSWR der Tore 1 und 2 (links) und Vorwärtsübertragungsgewinn |S21| (rechts)</em>
+  <em>Abbildung 12 — Streifenleitungsverstärker bei 1,2 GHz: VSWR der Tore 1 und 2 (links) und Vorwärtsübertragungsgewinn |S21| (rechts)</em>
 </p>
 
 - **Stehwellenverhältnis (VSWR) bei $1,2\text{ GHz}$**: $\text{VSWR}_1 = 1,442$, $\text{VSWR}_2 = 1,308$.
@@ -171,19 +197,19 @@ Das Layout beinhaltet die Montagefläche des 2SK2974-Gehäuses ([`cad/2sk2974_aw
 <p align="center">
   <img src="docs/images/smith_chart_smd_s11_s22.png" alt="Smith-Diagramm SMD-Schaltung" width="600"/>
   <br>
-  <em>Abbildung 10 — Smith-Diagramm der Schaltung mit realen SMD-Komponenten: S(1,1) und S(2,2) im Bereich 1,20–1,21 GHz</em>
+  <em>Abbildung 13 — Smith-Diagramm der Schaltung mit realen SMD-Komponenten: S(1,1) und S(2,2) im Bereich 1,20–1,21 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="VSWR SMD-Schaltung" width="750"/>
   <br>
-  <em>Abbildung 11 — Frequenzgang des Stehwellenverhältnisses (VSWR) mit realen SMD-Komponenten im Bereich 0,5–1,5 GHz</em>
+  <em>Abbildung 14 — Frequenzgang des Stehwellenverhältnisses (VSWR) mit realen SMD-Komponenten im Bereich 0,5–1,5 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_smd_s21_gain.png" alt="Verstärkung SMD-Schaltung" width="750"/>
   <br>
-  <em>Abbildung 12 — Frequenzgang des Vorwärtsübertragungsgewinns |S21| im Bereich 0,5–1,5 GHz</em>
+  <em>Abbildung 15 — Frequenzgang des Vorwärtsübertragungsgewinns |S21| im Bereich 0,5–1,5 GHz</em>
 </p>
 
 - **Smith-Diagramm**: Die Marker $S(1,1)$ und $S(2,2)$ im Band $1,20 - 1,21\text{ GHz}$ treffen präzise das $50\ \Omega$-Zentrum.
