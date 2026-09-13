@@ -34,8 +34,7 @@ The project is developed in **Cadence AWR Microwave Office (MWO)** and illustrat
 │       ├── plot_vswr_frequency_response.png    # VSWR vs frequency plot (ideal circuit)
 │       ├── schematic_2sk2974_matching_1200mhz.png # Ideal lumped matching circuit schematic
 │       ├── schematic_microstrip_pa_2sk2974.png # Microstrip amplifier schematic with bias and SMA
-│       ├── schematic_smd_amplifier_2sk2974.png # RF signal chain schematic with realistic SMD components
-│       ├── schematic_smd_meander_bias_network.png # Quarter-wave meander bias network with C0G bypass caps
+│       ├── schematic_smd_amplifier_2sk2974.png # Complete schematic with vendor SMD components and meander bias
 │       ├── smith_chart_microstrip_s11_s22.png  # Smith chart S11 & S22 of microstrip circuit
 │       ├── smith_chart_s11_matching.png        # Input S11 Smith chart (ideal circuit)
 │       ├── smith_chart_s22_matching.png        # Output S22 Smith chart (ideal circuit)
@@ -99,15 +98,9 @@ S_{22} &= 0.93364 \angle -178.72^\circ
 ### 3. Realistic Microstrip Circuit with Vendor SMD Components
 
 <p align="center">
-  <img src="docs/images/schematic_smd_amplifier_2sk2974.png" alt="SMD Microstrip Amplifier RF Path Schematic" width="900"/>
+  <img src="docs/images/schematic_smd_amplifier_2sk2974.png" alt="Complete Vendor SMD Amplifier Schematic with Meander Bias Lines" width="900"/>
   <br>
-  <em>Figure 3 — RF amplifier signal chain schematic with vendor SMD components in Cadence AWR Microwave Office</em>
-</p>
-
-<p align="center">
-  <img src="docs/images/schematic_smd_meander_bias_network.png" alt="Quarter-Wave Meander Bias Feed Chokes" width="900"/>
-  <br>
-  <em>Figure 4 — Quarter-wave meander line DC bias feed chokes with C0G 1206 decoupling capacitors</em>
+  <em>Figure 3 — Complete schematic of the amplifier with vendor SMD components and quarter-wave meander bias networks</em>
 </p>
 
 - **DC-Blocking Capacitors**: high-Q ceramic ATC 700A series — `SUBCKT ID=S6, S2 NET="700A102G"` ($1000\text{ pF}$).
@@ -123,19 +116,19 @@ S_{22} &= 0.93364 \angle -178.72^\circ
 <p align="center">
   <img src="docs/images/layout_pcb_smd_2d_dimension_x.png" alt="PCB 2D Layout with Horizontal Board Dimension" width="850"/>
   <br>
-  <em>Figure 5 — 2D PCB layout in AWR Microwave Office: horizontal board dimension ($32.38\text{ mm}$)</em>
+  <em>Figure 4 — 2D PCB layout in AWR Microwave Office: horizontal board dimension (32.38 mm)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/layout_pcb_smd_2d_dimension_y.png" alt="PCB 2D Layout with Vertical Board Dimension" width="850"/>
   <br>
-  <em>Figure 6 — 2D PCB layout in AWR Microwave Office: vertical board dimension ($24.12\text{ mm}$)</em>
+  <em>Figure 5 — 2D PCB layout in AWR Microwave Office: vertical board dimension (24.12 mm)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/layout_pcb_smd_3d_view.png" alt="3D Assembly Model of 2SK2974 Amplifier PCB" width="850"/>
   <br>
-  <em>Figure 7 — 3D layout view of the complete amplifier board assembly (3D Layout View)</em>
+  <em>Figure 6 — 3D layout view of the complete amplifier board assembly (3D Layout View)</em>
 </p>
 
 - **Board Dimensions**: ultra-compact form factor measuring **$32.38 \times 24.12\text{ mm}$** (substrate footprint $\approx 7.8\text{ cm}^2$).
@@ -154,20 +147,20 @@ S_{22} &= 0.93364 \angle -178.72^\circ
   <img src="docs/images/smith_chart_s11_matching.png" alt="S11 Smith Chart" width="48%"/>
   <img src="docs/images/smith_chart_s22_matching.png" alt="S22 Smith Chart" width="48%"/>
   <br>
-  <em>Figure 8 — Smith chart reflection loci for ideal circuit: S11 (left) and S22 (right)</em>
+  <em>Figure 7 — Smith chart reflection loci for ideal circuit: S11 (left) and S22 (right)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_s11_frequency_response.png" alt="S11 Frequency Response" width="48%"/>
   <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequency Response" width="48%"/>
   <br>
-  <em>Figure 9 — Frequency response of input reflection |S11| (left) and forward gain |S21| (right)</em>
+  <em>Figure 8 — Frequency response of input reflection |S11| (left) and forward gain |S21| (right)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequency Response" width="700"/>
   <br>
-  <em>Figure 10 — Voltage Standing Wave Ratio (VSWR) versus frequency for ideal model</em>
+  <em>Figure 9 — Voltage Standing Wave Ratio (VSWR) versus frequency for ideal model</em>
 </p>
 
 - Input reflection coefficient at $1200\text{ MHz}$: $|S_{11}| = -18.32\text{ dB}$.
@@ -179,14 +172,14 @@ S_{22} &= 0.93364 \angle -178.72^\circ
 <p align="center">
   <img src="docs/images/smith_chart_microstrip_s11_s22.png" alt="Microstrip Smith Chart" width="600"/>
   <br>
-  <em>Figure 11 — Smith chart impedance plot for microstrip circuit: S11 (triangle) and S22 (square) at 1.2 GHz</em>
+  <em>Figure 10 — Smith chart impedance plot for microstrip circuit: S11 (triangle) and S22 (square) at 1.2 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_microstrip_vswr.png" alt="Microstrip VSWR" width="48%"/>
   <img src="docs/images/plot_microstrip_s21_gain.png" alt="Microstrip Gain" width="48%"/>
   <br>
-  <em>Figure 12 — Microstrip circuit performance at 1.2 GHz: Port 1 & 2 VSWR (left) and forward gain |S21| (right)</em>
+  <em>Figure 11 — Microstrip circuit performance at 1.2 GHz: Port 1 & 2 VSWR (left) and forward gain |S21| (right)</em>
 </p>
 
 - **Port VSWR at $1.2\text{ GHz}$**: $\text{VSWR}_1 = 1.442$, $\text{VSWR}_2 = 1.308$.
@@ -197,19 +190,19 @@ S_{22} &= 0.93364 \angle -178.72^\circ
 <p align="center">
   <img src="docs/images/smith_chart_smd_s11_s22.png" alt="SMD Smith Chart" width="600"/>
   <br>
-  <em>Figure 13 — Smith chart locus of the vendor SMD component model: S(1,1) and S(2,2) across 1.20–1.21 GHz</em>
+  <em>Figure 12 — Smith chart locus of the vendor SMD component model: S(1,1) and S(2,2) across 1.20–1.21 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="SMD Circuit VSWR" width="750"/>
   <br>
-  <em>Figure 14 — Frequency response of VSWR with vendor SMD components across 0.5–1.5 GHz</em>
+  <em>Figure 13 — Frequency response of VSWR with vendor SMD components across 0.5–1.5 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_smd_s21_gain.png" alt="SMD Circuit Gain" width="750"/>
   <br>
-  <em>Figure 15 — Frequency response of forward transmission gain |S21| across 0.5–1.5 GHz</em>
+  <em>Figure 14 — Frequency response of forward transmission gain |S21| across 0.5–1.5 GHz</em>
 </p>
 
 - **Smith Chart Impedance Match**: markers for $S(1,1)$ and $S(2,2)$ over $1.20 - 1.21\text{ GHz}$ are positioned directly at the $50\ \Omega$ center.

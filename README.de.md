@@ -34,8 +34,7 @@ Das Projekt wurde in **Cadence AWR Microwave Office (MWO)** entwickelt und veran
 │       ├── plot_vswr_frequency_response.png    # Stehwellenverhältnis (VSWR) der idealen Schaltung
 │       ├── schematic_2sk2974_matching_1200mhz.png # Schaltplan der idealen Anpassungsschaltung
 │       ├── schematic_microstrip_pa_2sk2974.png # Streifenleitungsschaltplan mit Bias und SMA
-│       ├── schematic_smd_amplifier_2sk2974.png # HF-Signalpfad-Schaltplan mit realen SMD-Komponenten
-│       ├── schematic_smd_meander_bias_network.png # Lambda/4-Mäander-Vorspannungsnetzwerk mit C0G-Abblockkondensatoren
+│       ├── schematic_smd_amplifier_2sk2974.png # Vollständiger SMD-Verstärkerschaltplan mit Mäander-Bias
 │       ├── smith_chart_microstrip_s11_s22.png  # Smith-Diagramm S11 & S22 der Streifenleitungsschaltung
 │       ├── smith_chart_s11_matching.png        # Smith-Diagramm für S11 (ideale Schaltung)
 │       ├── smith_chart_s22_matching.png        # Smith-Diagramm für S22 (ideale Schaltung)
@@ -99,15 +98,9 @@ S_{22} &= 0,93364 \angle -178,72^\circ
 ### 3. Reale Streifenleitungsschaltung mit SMD-Komponenten von Herstellern
 
 <p align="center">
-  <img src="docs/images/schematic_smd_amplifier_2sk2974.png" alt="SMD-HF-Signalpfad-Schaltplan 2SK2974" width="900"/>
+  <img src="docs/images/schematic_smd_amplifier_2sk2974.png" alt="SMD-Verstärkerschaltplan 2SK2974 mit Mäander-Bias" width="900"/>
   <br>
-  <em>Abbildung 3 — Schaltplan des HF-Verstärkerpfads mit realen SMD-Komponenten in Cadence AWR Microwave Office</em>
-</p>
-
-<p align="center">
-  <img src="docs/images/schematic_smd_meander_bias_network.png" alt="Lambda/4-Mäander-Vorspannungsdrosseln" width="900"/>
-  <br>
-  <em>Abbildung 4 — Lambda/4-Mäander-Vorspannungsleitungen mit C0G 1206 Abblockkondensatoren</em>
+  <em>Abbildung 3 — Gesamtschaltplan des Verstärkers mit realen SMD-Komponenten und Lambda/4-Mäander-Vorspannungsnetzwerken</em>
 </p>
 
 - **DC-Trennkapazitäten**: Keramische Präzisionskondensatoren ATC 700A — `SUBCKT ID=S6, S2 NET="700A102G"` ($1000\text{ pF}$).
@@ -123,19 +116,19 @@ S_{22} &= 0,93364 \angle -178,72^\circ
 <p align="center">
   <img src="docs/images/layout_pcb_smd_2d_dimension_x.png" alt="2D-Leiterplattenlayout mit horizontaler Abmessung" width="850"/>
   <br>
-  <em>Abbildung 5 — 2D-Leiterplattenlayout in AWR Microwave Office: Messung der Gesamtbreite ($32,38\text{ mm}$)</em>
+  <em>Abbildung 4 — 2D-Leiterplattenlayout in AWR Microwave Office: Messung der Gesamtbreite (32,38 mm)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/layout_pcb_smd_2d_dimension_y.png" alt="2D-Leiterplattenlayout mit vertikaler Abmessung" width="850"/>
   <br>
-  <em>Abbildung 6 — 2D-Leiterplattenlayout in AWR Microwave Office: Messung der Gesamthöhe ($24,12\text{ mm}$)</em>
+  <em>Abbildung 5 — 2D-Leiterplattenlayout in AWR Microwave Office: Messung der Gesamthöhe (24,12 mm)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/layout_pcb_smd_3d_view.png" alt="3D-Modell der Verstärkerbaugruppe 2SK2974" width="850"/>
   <br>
-  <em>Abbildung 7 — 3D-Layoutansicht der kompletten Verstärkerbaugruppe (3D Layout View)</em>
+  <em>Abbildung 6 — 3D-Layoutansicht der kompletten Verstärkerbaugruppe (3D Layout View)</em>
 </p>
 
 - **Platinenabmessungen**: Ultrakompakte Baugruppe mit Außenmaßen von **$32,38 \times 24,12\text{ mm}$** (Substratfläche $\approx 7,8\text{ cm}^2$).
@@ -154,20 +147,20 @@ S_{22} &= 0,93364 \angle -178,72^\circ
   <img src="docs/images/smith_chart_s11_matching.png" alt="S11 Smith-Diagramm" width="48%"/>
   <img src="docs/images/smith_chart_s22_matching.png" alt="S22 Smith-Diagramm" width="48%"/>
   <br>
-  <em>Abbildung 8 — Smith-Diagramme der idealen Schaltung: S11 (links) und S22 (rechts)</em>
+  <em>Abbildung 7 — Smith-Diagramme der idealen Schaltung: S11 (links) und S22 (rechts)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_s11_frequency_response.png" alt="S11 Frequenzgang" width="48%"/>
   <img src="docs/images/plot_s21_frequency_response.png" alt="S21 Frequenzgang" width="48%"/>
   <br>
-  <em>Abbildung 9 — Frequenzgang von |S11| (links) und Übertragungsgewinn |S21| (rechts)</em>
+  <em>Abbildung 8 — Frequenzgang von |S11| (links) und Übertragungsgewinn |S21| (rechts)</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_vswr_frequency_response.png" alt="VSWR Frequenzgang" width="700"/>
   <br>
-  <em>Abbildung 10 — Stehwellenverhältnis (VSWR) am Eingang der idealen Schaltung</em>
+  <em>Abbildung 9 — Stehwellenverhältnis (VSWR) am Eingang der idealen Schaltung</em>
 </p>
 
 - Eingangsreflexionsfaktor bei $1200\text{ MHz}$: $|S_{11}| = -18,32\text{ dB}$.
@@ -179,14 +172,14 @@ S_{22} &= 0,93364 \angle -178,72^\circ
 <p align="center">
   <img src="docs/images/smith_chart_microstrip_s11_s22.png" alt="Smith-Diagramm Streifenleitung" width="600"/>
   <br>
-  <em>Abbildung 11 — Smith-Diagramm für die Streifenleitungsschaltung: S11 (Dreieck) und S22 (Quadrat) bei 1,2 GHz</em>
+  <em>Abbildung 10 — Smith-Diagramm für die Streifenleitungsschaltung: S11 (Dreieck) und S22 (Quadrat) bei 1,2 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_microstrip_vswr.png" alt="VSWR Streifenleitung" width="48%"/>
   <img src="docs/images/plot_microstrip_s21_gain.png" alt="Verstärkung Streifenleitung" width="48%"/>
   <br>
-  <em>Abbildung 12 — Streifenleitungsverstärker bei 1,2 GHz: VSWR der Tore 1 und 2 (links) und Vorwärtsübertragungsgewinn |S21| (rechts)</em>
+  <em>Abbildung 11 — Streifenleitungsverstärker bei 1,2 GHz: VSWR der Tore 1 und 2 (links) und Vorwärtsübertragungsgewinn |S21| (rechts)</em>
 </p>
 
 - **Stehwellenverhältnis (VSWR) bei $1,2\text{ GHz}$**: $\text{VSWR}_1 = 1,442$, $\text{VSWR}_2 = 1,308$.
@@ -197,19 +190,19 @@ S_{22} &= 0,93364 \angle -178,72^\circ
 <p align="center">
   <img src="docs/images/smith_chart_smd_s11_s22.png" alt="Smith-Diagramm SMD-Schaltung" width="600"/>
   <br>
-  <em>Abbildung 13 — Smith-Diagramm der Schaltung mit realen SMD-Komponenten: S(1,1) und S(2,2) im Bereich 1,20–1,21 GHz</em>
+  <em>Abbildung 12 — Smith-Diagramm der Schaltung mit realen SMD-Komponenten: S(1,1) und S(2,2) im Bereich 1,20–1,21 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_smd_vswr_frequency_response.png" alt="VSWR SMD-Schaltung" width="750"/>
   <br>
-  <em>Abbildung 14 — Frequenzgang des Stehwellenverhältnisses (VSWR) mit realen SMD-Komponenten im Bereich 0,5–1,5 GHz</em>
+  <em>Abbildung 13 — Frequenzgang des Stehwellenverhältnisses (VSWR) mit realen SMD-Komponenten im Bereich 0,5–1,5 GHz</em>
 </p>
 
 <p align="center">
   <img src="docs/images/plot_smd_s21_gain.png" alt="Verstärkung SMD-Schaltung" width="750"/>
   <br>
-  <em>Abbildung 15 — Frequenzgang des Vorwärtsübertragungsgewinns |S21| im Bereich 0,5–1,5 GHz</em>
+  <em>Abbildung 14 — Frequenzgang des Vorwärtsübertragungsgewinns |S21| im Bereich 0,5–1,5 GHz</em>
 </p>
 
 - **Smith-Diagramm**: Die Marker $S(1,1)$ und $S(2,2)$ im Band $1,20 - 1,21\text{ GHz}$ treffen präzise das $50\ \Omega$-Zentrum.
